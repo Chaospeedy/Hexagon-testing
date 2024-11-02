@@ -9,10 +9,9 @@ public class TempGenerator : MonoBehaviour
 
     public Material[] newTileMaterials = new Material[7];
     // Start is called before the first frame update
-    void Start()
+    public void Init()
     {
         GenerateMaterials();
-        Instantiate(hexTilePrefab, new Vector3(0,0,0), Quaternion.identity);
     }
 
     // Update is called once per frame
