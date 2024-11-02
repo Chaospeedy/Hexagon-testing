@@ -529,7 +529,7 @@ MonoBehaviour:
   mouseIndicator: {fileID: 442342997}
   cellIndicator: {fileID: 6089520904553908800}
   inputManager: {fileID: 1928997182}
-  itemsRadius: 1.5
+  itemsRadius: 1.25
   grid: {fileID: 1646123894}
   tileGenerator: {fileID: 665082891}
 --- !u!1 &1624606467
@@ -767,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalPosition.y
@@ -775,7 +775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7025003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalRotation.w
@@ -783,15 +783,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3962841398661465325, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -809,12 +809,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: HexagonTile
       objectReference: {fileID: 0}
-    - target: {fileID: 8588123035502799611, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8588123035502799611, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
 --- !u!4 &3962841400375679367 stripped
 Transform:
