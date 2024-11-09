@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlacementSystem : MonoBehaviour
 {
-    [SerializeField] private GameObject cellIndicator;
+    [SerializeField] public GameObject cellIndicator;
     [SerializeField] private InputManager inputManager;
 
     [SerializeField] private Grid grid;
@@ -20,6 +20,8 @@ public class PlacementSystem : MonoBehaviour
 
     private int pointsWorth = 0;
 
+    public bool placementIsValid;
+
     private void Start(){
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
         cellIndicatorSections = cellIndicator.GetComponentsInChildren<HexagonSection>();
@@ -28,29 +30,11 @@ public class PlacementSystem : MonoBehaviour
     private void Update(){
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-        bool placementIsValid = CheckPlacementValidity();
-        if(placementIsValid && numberOfTiles > 0){
-            ToggleRenderOn();
-        }else{
-            ToggleRenderOff();
-        }
-
-        previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
-        cellIndicatorSections = cellIndicator.GetComponentsInChildren<HexagonSection>();
+        placementIsValid = CheckPlacementValidity();
         
+        DisplayIndicator(gridPosition);
 
-        pointsWorth = 0;
-
-        foreach(HexagonSection section in cellIndicatorSections){
-            if(section.isColliding){
-                if(section.collidingWith.GetComponent<HexagonSection>().material == cellIndicatorSections[section.sectionNumber].material){
-                    pointsWorth += 100;
-                }
-            }
-        }
-
-        
-        cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+        CalculatePoints();
 
         if(Input.GetMouseButtonDown(0) && numberOfTiles > 0){
             if(placementIsValid) {
@@ -70,7 +54,7 @@ public class PlacementSystem : MonoBehaviour
         }
     }
 
-    private bool CheckPlacementValidity()
+    public bool CheckPlacementValidity()
     {   
         bool atLeastOne = false;
         if(cellIndicator.GetComponentInChildren<HexagonTile>().isColliding){
@@ -94,6 +78,30 @@ public class PlacementSystem : MonoBehaviour
     private void ToggleRenderOn(){
         foreach(Renderer renderers in previewRenderer){
             renderers.enabled = true;
+        }
+    }
+
+    private void DisplayIndicator(Vector3Int gridPosition){
+        if(placementIsValid && numberOfTiles > 0){
+            ToggleRenderOn();
+        }else{
+            ToggleRenderOff();
+        }
+
+        previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
+        cellIndicatorSections = cellIndicator.GetComponentsInChildren<HexagonSection>();
+        cellIndicator.transform.position = grid.CellToWorld(gridPosition);
+    }
+
+    private void CalculatePoints(){
+        pointsWorth = 0;
+
+        foreach(HexagonSection section in cellIndicatorSections){
+            if(section.isColliding){
+                if(section.collidingWith.GetComponent<HexagonSection>().material == cellIndicatorSections[section.sectionNumber].material){
+                    pointsWorth += 100;
+                }
+            }
         }
     }
 
