@@ -28,9 +28,16 @@ public class PlacementSystem : MonoBehaviour
     private void Update(){
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+        bool placementIsValid = CheckPlacementValidity();
+        if(placementIsValid && numberOfTiles > 0){
+            ToggleRenderOn();
+        }else{
+            ToggleRenderOff();
+        }
+
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
         cellIndicatorSections = cellIndicator.GetComponentsInChildren<HexagonSection>();
-        bool placementIsValid = CheckPlacementValidity();
+        
 
         pointsWorth = 0;
 
@@ -42,20 +49,15 @@ public class PlacementSystem : MonoBehaviour
             }
         }
 
-        if(placementIsValid && numberOfTiles > 0){
-            ToggleRenderOn();
-        }else{
-            ToggleRenderOff();
-        }
-
+        
         cellIndicator.transform.position = grid.CellToWorld(gridPosition);
 
         if(Input.GetMouseButtonDown(0) && numberOfTiles > 0){
             if(placementIsValid) {
                 //create new colors for cell indicator
-                tileGenerator.GetComponent<TempGenerator>().GenerateTile();
+                tileGenerator.GetComponent<HexagonGenerator>().GenerateTile();
                 //place the current cell indicator in the section of the grid the player is hovering over
-                cellIndicator = Instantiate(tileGenerator.GetComponent<TempGenerator>().hexTilePrefab);
+                cellIndicator = Instantiate(tileGenerator.GetComponent<HexagonGenerator>().hexTilePrefab);
                 numberOfTiles--;
             }
              
