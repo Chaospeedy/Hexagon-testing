@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour
     private void Update()
     {
         Vector3 inputDirection = new Vector3(0,0,0);
-        int edgeScrollSize = 15;
+        int edgeScrollSize = 30;
         
         if(Input.mousePosition.x < edgeScrollSize && transform.position.x < 5){//left side
             inputDirection.x = +1f;

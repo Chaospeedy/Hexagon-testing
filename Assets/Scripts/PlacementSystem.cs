@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlacementSystem : MonoBehaviour
 {
-    [SerializeField] public GameObject cellIndicator;
+    [SerializeField] private GameObject cellIndicator;
     [SerializeField] private InputManager inputManager;
 
     [SerializeField] private Grid grid;
@@ -18,15 +19,21 @@ public class PlacementSystem : MonoBehaviour
 
     private HexagonSection[] cellIndicatorSections;
 
+    private GameObject[] adjacentHexagons;
+
     private int pointsWorth = 0;
 
     public bool placementIsValid;
-    public ScoreCounter scoreCounter;
-    public TileCounter tileCounter;
+    private ScoreCounter scoreCounter;
+    private TileCounter tileCounter;
+    private int matchingSections = 0;
 
     private void Start(){
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
+        tileGenerator.GetComponent<HexagonGenerator>().GenerateTile();
+        cellIndicator = Instantiate(tileGenerator.GetComponent<HexagonGenerator>().hexTilePrefab);
         cellIndicatorSections = cellIndicator.GetComponentsInChildren<HexagonSection>();
+        adjacentHexagons = new GameObject[6];
         GameObject scoreGO = GameObject.Find("ScoreCounter");
         GameObject tileGO = GameObject.Find("TileCounter");
 
@@ -41,17 +48,19 @@ public class PlacementSystem : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
         placementIsValid = CheckPlacementValidity();
-        
-        DisplayIndicator(gridPosition);
-
-        CalculatePoints();
 
         if(Input.GetMouseButtonDown(0) && numberOfTiles > 0){
             if(placementIsValid) {
                 //create new colors for cell indicator
                 tileGenerator.GetComponent<HexagonGenerator>().GenerateTile();
                 //place the current cell indicator in the section of the grid the player is hovering over
-                cellIndicator = Instantiate(tileGenerator.GetComponent<HexagonGenerator>().hexTilePrefab);
+
+                CalculatePoints();
+
+                cellIndicator.GetComponentInChildren<HexagonTile>().matchingSections = matchingSections;
+
+                cellIndicator = Instantiate(tileGenerator.GetComponent<HexagonGenerator>().hexTilePrefab, gridPosition, Quaternion.identity);
+                
                 tileCounter.tilesRemaining = --numberOfTiles;
                 scoreCounter.score += pointsWorth;
             }
@@ -63,6 +72,8 @@ public class PlacementSystem : MonoBehaviour
         if(Input.GetAxisRaw("Mouse ScrollWheel") < 0 && placementIsValid){
             cellIndicator.transform.Rotate(Vector3.down * 60f, Space.Self);
         }
+
+        DisplayIndicator(gridPosition);
     }
 
     public bool CheckPlacementValidity()
@@ -106,11 +117,26 @@ public class PlacementSystem : MonoBehaviour
 
     private void CalculatePoints(){
         pointsWorth = 0;
-
-        foreach(HexagonSection section in cellIndicatorSections){
-            if(section.isColliding){
-                if(section.collidingWith.GetComponent<HexagonSection>().material == cellIndicatorSections[section.sectionNumber].material){
-                    pointsWorth += 100;
+        matchingSections = 0;
+        Array.Clear(adjacentHexagons, 0, adjacentHexagons.Length);
+        for(int i = 0; i < cellIndicatorSections.Length; i++){
+            if(cellIndicatorSections[i].isColliding){
+                adjacentHexagons[i] = cellIndicatorSections[i].collidingWith.transform.parent.gameObject;
+                if(cellIndicatorSections[i].collidingWith.GetComponent<HexagonSection>().material == cellIndicatorSections[cellIndicatorSections[i].sectionNumber].material){
+                    pointsWorth += 100; 
+                    matchingSections++; 
+                    if(pointsWorth == 600){
+                        numberOfTiles++;
+                        pointsWorth += 400;
+                    }
+                    if(adjacentHexagons[i] != null){
+                        adjacentHexagons[i].GetComponentInChildren<HexagonTile>().matchingSections++;
+                        if(adjacentHexagons[i].GetComponentInChildren<HexagonTile>().matchingSections == 6){
+                            pointsWorth += 150;
+                            numberOfTiles++;
+                        }
+                    }
+                            
                 }
             }
         }

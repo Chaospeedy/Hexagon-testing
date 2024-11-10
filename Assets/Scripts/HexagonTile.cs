@@ -34,6 +34,7 @@ public class HexagonTile : MonoBehaviour
     public bool isFlatTopped;
 
     public bool isColliding = false;
+    public int matchingSections = 0;
 
     public void Awake(){
         isColliding = false;

@@ -20,6 +20,6 @@ public class TileCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        uiText.text = "Tiles: " + tilesRemaining;
+        uiText.text = "Tiles Remaining: " + tilesRemaining;
     }
 }
