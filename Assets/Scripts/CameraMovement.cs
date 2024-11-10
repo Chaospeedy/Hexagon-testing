@@ -9,7 +9,15 @@ public class CameraMovement : MonoBehaviour
 
     private float currentZoomLevel = 1f;
 
-    void Update()
+    private PlacementSystem placementSystem;
+
+    private void Start(){
+        GameObject placementGO = GameObject.Find("PlacementSystem");
+
+        placementSystem = placementGO.GetComponent<PlacementSystem>();
+    }
+
+    private void Update()
     {
         Vector3 inputDirection = new Vector3(0,0,0);
         int edgeScrollSize = 15;
@@ -29,11 +37,11 @@ public class CameraMovement : MonoBehaviour
 
         //Vector3 moveDirection = transform.forward * inputDirection.z + transform.right * inputDirection.x;
 
-        if(Input.GetAxisRaw("Mouse ScrollWheel") > 0 && currentZoomLevel > minCameraZoomLevel){
+        if(Input.GetAxisRaw("Mouse ScrollWheel") > 0 && currentZoomLevel > minCameraZoomLevel && !placementSystem.placementIsValid){
             inputDirection.y = -15f;
             currentZoomLevel--;
         }
-        if(Input.GetAxisRaw("Mouse ScrollWheel") < 0 && currentZoomLevel < maxCameraZoomLevel){
+        if(Input.GetAxisRaw("Mouse ScrollWheel") < 0 && currentZoomLevel < maxCameraZoomLevel && !placementSystem.placementIsValid){
             inputDirection.y = +15f;
             currentZoomLevel++;
         }

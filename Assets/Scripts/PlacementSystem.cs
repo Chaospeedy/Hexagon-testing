@@ -21,10 +21,20 @@ public class PlacementSystem : MonoBehaviour
     private int pointsWorth = 0;
 
     public bool placementIsValid;
+    public ScoreCounter scoreCounter;
+    public TileCounter tileCounter;
 
     private void Start(){
         previewRenderer = cellIndicator.GetComponentsInChildren<Renderer>();
         cellIndicatorSections = cellIndicator.GetComponentsInChildren<HexagonSection>();
+        GameObject scoreGO = GameObject.Find("ScoreCounter");
+        GameObject tileGO = GameObject.Find("TileCounter");
+
+        scoreCounter = scoreGO.GetComponent<ScoreCounter>();
+        tileCounter = tileGO.GetComponent<TileCounter>();
+
+        tileCounter.tilesRemaining = numberOfTiles;
+
     }
 
     private void Update(){
@@ -42,7 +52,8 @@ public class PlacementSystem : MonoBehaviour
                 tileGenerator.GetComponent<HexagonGenerator>().GenerateTile();
                 //place the current cell indicator in the section of the grid the player is hovering over
                 cellIndicator = Instantiate(tileGenerator.GetComponent<HexagonGenerator>().hexTilePrefab);
-                numberOfTiles--;
+                tileCounter.tilesRemaining = --numberOfTiles;
+                scoreCounter.score += pointsWorth;
             }
              
         }

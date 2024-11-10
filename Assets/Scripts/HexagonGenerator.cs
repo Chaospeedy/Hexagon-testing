@@ -7,7 +7,7 @@ public class HexagonGenerator : MonoBehaviour
     public GameObject hexTilePrefab;
     public Material[] materials = new Material[4];
 
-    public Material[] newTileMaterials = new Material[7];
+    public Material[] newTileMaterials = new Material[6];
     // Start is called before the first frame update
     void Start()
     {
@@ -18,14 +18,14 @@ public class HexagonGenerator : MonoBehaviour
 
     public void GenerateTile(){
         
-        hexTilePrefab.transform.GetChild(0).GetComponent<HexagonTile>().material = newTileMaterials[0];
+        hexTilePrefab.transform.GetChild(0).GetComponent<HexagonTile>().material = newTileMaterials[Random.Range(0, materials.Length)];
 
-        hexTilePrefab.transform.GetChild(1).GetComponent<HexagonSection>().material = newTileMaterials[1];
-        hexTilePrefab.transform.GetChild(2).GetComponent<HexagonSection>().material = newTileMaterials[2];
-        hexTilePrefab.transform.GetChild(3).GetComponent<HexagonSection>().material = newTileMaterials[3];
-        hexTilePrefab.transform.GetChild(4).GetComponent<HexagonSection>().material = newTileMaterials[4];
-        hexTilePrefab.transform.GetChild(5).GetComponent<HexagonSection>().material = newTileMaterials[5];
-        hexTilePrefab.transform.GetChild(6).GetComponent<HexagonSection>().material = newTileMaterials[6];
+        hexTilePrefab.transform.GetChild(1).GetComponent<HexagonSection>().material = newTileMaterials[0];
+        hexTilePrefab.transform.GetChild(2).GetComponent<HexagonSection>().material = newTileMaterials[1];
+        hexTilePrefab.transform.GetChild(3).GetComponent<HexagonSection>().material = newTileMaterials[2];
+        hexTilePrefab.transform.GetChild(4).GetComponent<HexagonSection>().material = newTileMaterials[3];
+        hexTilePrefab.transform.GetChild(5).GetComponent<HexagonSection>().material = newTileMaterials[4];
+        hexTilePrefab.transform.GetChild(6).GetComponent<HexagonSection>().material = newTileMaterials[5];
 
         GenerateMaterials();
     }
