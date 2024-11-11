@@ -74,6 +74,9 @@ public class PlacementSystem : MonoBehaviour
         }
 
         DisplayIndicator(gridPosition);
+        if(numberOfTiles == 0){
+            ToggleRenderOff();
+        }
     }
 
     public bool CheckPlacementValidity()
@@ -104,7 +107,7 @@ public class PlacementSystem : MonoBehaviour
     }
 
     private void DisplayIndicator(Vector3Int gridPosition){
-        if(placementIsValid && numberOfTiles > 0){
+        if(placementIsValid){
             ToggleRenderOn();
         }else{
             ToggleRenderOff();
