@@ -391,10 +391,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hexTilePrefab: {fileID: 6089520904528140074, guid: aee684cbf3e86114f8986176e0a61076, type: 3}
   materials:
-  - {fileID: 2100000, guid: 1826904ba8a709246bf104fe5339e85b, type: 2}
-  - {fileID: 2100000, guid: cb2bbe5cf12dccf4c98b31014091fd66, type: 2}
-  - {fileID: 2100000, guid: 0fe075867d7d25a4994b37e579cc10c8, type: 2}
-  - {fileID: 2100000, guid: 01d7c28cd6c7bf74290f410b614fdebd, type: 2}
+  - {fileID: 2100000, guid: fe40329174e9720479ab77410cc459ab, type: 2}
+  - {fileID: 2100000, guid: 3584c50ec7d45f348a5aa57d24bb5737, type: 2}
+  - {fileID: 2100000, guid: f70d582ac8795e94fbba81f1bda57848, type: 2}
+  - {fileID: 2100000, guid: ed77080e081fcf6498c2325430f2191f, type: 2}
   newTileMaterials:
   - {fileID: 0}
   - {fileID: 0}
