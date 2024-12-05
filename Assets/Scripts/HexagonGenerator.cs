@@ -17,8 +17,10 @@ public class HexagonGenerator : MonoBehaviour
 
 
     public void GenerateTile(){
-        
-        hexTilePrefab.transform.GetChild(0).GetComponent<HexagonTile>().material = newTileMaterials[Random.Range(0, materials.Length)];
+
+        int randomNumber = Random.Range(0, materials.Length);
+
+        hexTilePrefab.transform.GetChild(0).GetComponent<HexagonTile>().material = newTileMaterials[randomNumber];
 
         hexTilePrefab.transform.GetChild(1).GetComponent<HexagonSection>().material = newTileMaterials[0];
         hexTilePrefab.transform.GetChild(2).GetComponent<HexagonSection>().material = newTileMaterials[1];
@@ -27,6 +29,12 @@ public class HexagonGenerator : MonoBehaviour
         hexTilePrefab.transform.GetChild(5).GetComponent<HexagonSection>().material = newTileMaterials[4];
         hexTilePrefab.transform.GetChild(6).GetComponent<HexagonSection>().material = newTileMaterials[5];
 
+        for(int i = 1; i < newTileMaterials.Length; i++){
+            if(Random.Range(0, 100) < 15){
+                hexTilePrefab.transform.GetChild(i).GetComponent<HexagonSection>().material = newTileMaterials[randomNumber];
+            }
+        }
+        
         GenerateMaterials();
     }
 
